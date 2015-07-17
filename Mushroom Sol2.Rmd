@@ -1,0 +1,46 @@
+---
+title: "Mushroom Solution2"
+author: "sanjive"
+date: "July 15, 2015"
+output: html_document
+---
+
+
+MushCon<-url("https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data","r")
+colNames<-c("Edible_Poisonous","cap_shape","cap_surface","cap_color","bruises","odor","gill_attachment","gill_spacing","gill_size","gill_color","stalk_shape","stalk_root","stalk_surface_abv_ring","stalk_surface_bel_ring","stalk_color_abv_ring","stalk_color_blw_ring","veil_type","veil_color","ring_no","ring_type","spore_prnt_colo","popuation","habitat")
+
+z<-read.table(csep,sep=",",col.names=colNames,na.strings=c("NA", "-", "?"),stringsAsFactors=F)
+
+library(sqldf)
+df<-sqldf(c("Update `z` set `Edible_Poisonous` = case
+                        when Edible_Poisonous='e' then 'edible'
+                        when Edible_Poisonous='p' then 'poisonous'
+                        else `Edible_Poisonous`
+                        end,
+                        `cap_shape` = case 
+                        when cap_shape='f' then 'flat'
+                        when cap_shape='x' then 'conical'
+                        when cap_shape='b' then 'bell' 
+                        else `cap_shape`
+                        end,
+                        `cap_surface` = case 
+                        when cap_surface='y' then 'scaly'
+                        when cap_surface='s' then 'smooth'
+                        else `cap_surface`
+                        end,
+                        `odor` = case 
+                        when odor='a' then 'almond'
+                        when odor='y' then 'fishy'
+                        else `odor`
+                        end"  ,"select * from `z` limit 100"))
+
+close(MushCon)
+
+
+
+#Test the code for updates
+
+for(i in 1:100)
+{print(df[i,])}
+
+

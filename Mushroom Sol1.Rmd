@@ -1,0 +1,56 @@
+---
+title: "Mushrooms Week3"
+author: "sanjivek"
+date: "July 13, 2015"
+output: html_document
+---
+
+
+csep<-url("https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data","r")
+colNames<-c("Edible_Poisonous","cap_shape","cap_surface","cap_color","bruises","odor","gill_attachment","gill_spacing","gill_size","gill_color","stalk_shape","stalk_root","stalk_surface_abv_ring","stalk_surface_bel_ring","stalk_color_abv_ring","stalk_color_blw_ring","veil_type","veil_color","ring_no","ring_type","spore_prnt_colo","popuation","habitat")
+z<-read.table(csep,sep=",",col.names=colNames,na.strings=c("NA", "-", "?"),stringsAsFactors=F)
+k<-nrow(z)
+print(k)
+for(i in 1:k){
+j<-1
+
+if(z[i,j]=="p"){
+ z[i,j]<-"Poisonous"}
+else if(z[i,j]=='e'){
+z[i,j]<-"Edible"}
+else{
+z[i,j]<-"NA"
+}
+}
+
+for(i in 1:k){
+j<-2
+
+if(z[i,j]=="x"){
+ z[i,j]<-"convex"}
+else if(z[i,j]=='b'){
+z[i,j]<-"bell"}
+else if(z[i,j]=='c'){
+z[i,j]<-"conical"}
+else if(z[i,j]=='f'){
+z[i,j]<-"flat"}
+else if(z[i,j]=='k'){
+z[i,j]<-"knobbed"}
+else if(z[i,j]=='s'){
+z[i,j]<-"sunken"}
+else{
+break
+}
+}
+
+
+close(csep)
+
+
+#Test the code for updates
+
+for(i in 1:100)
+{print(z[i,])}
+
+
+
